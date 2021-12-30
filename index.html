@@ -4,10 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>React</title>
   </head>
   <body>
+    <div id="root"></div>
     <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <!-- 리액트 js 어플리케이션을 인터렉티브 하게 만들어줌  엔진과 같다-->
     <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <!-- 모든 리액트 element들을 html body에 둘 수 있도록 해줌  -->
+    <script>
+      const root = document.getElementById("root");
+      const span = React.createElement(
+        "span",
+        { id: "span", style: { color: "green" } },
+        "hello~ im a span"
+      );
+      //   리액트에서 element를 생성하는 법. 아직 브라우저에 나타나지는 않는다.
+      //   첫번째 인수에는 element 두번째 인수에는 프로퍼트 추가 가능. id,class추가 가능 세번째에는 내용 입력 가능
+      ReactDOM.render(span, root);
+      //  리액트 element를 가지고 Html로 만들어 배치한다는 뜻, 뒤에 인자에는 어디에 둘지가 들어간다.
+    </script>
   </body>
 </html>
