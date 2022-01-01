@@ -16,13 +16,36 @@
       const root = document.getElementById("root");
       const span = React.createElement(
         "span",
-        { id: "span", style: { color: "green" } },
+        {
+          id: "span",
+          style: { color: "green" },
+          onMouseEnter: () => console.log("mouse enter"),
+        },
         "hello~ im a span"
       );
       //   리액트에서 element를 생성하는 법. 아직 브라우저에 나타나지는 않는다.
       //   첫번째 인수에는 element 두번째 인수에는 프로퍼트 추가 가능. id,class추가 가능 세번째에는 내용 입력 가능
-      ReactDOM.render(span, root);
+      const button = React.createElement(
+        "button",
+        {
+          onClick: () => console.log("i am click"),
+          style: {
+            backgroundColor: "tomato",
+          },
+        },
+        "click me"
+      );
+      // 버튼에 프로퍼티를 addEventListener 처럼 해주기위해 onClick 이용...(프러퍼티는 {}이렇게 쓰고 써야하는듯?)
+      // 이게 리액트의 힘이다. 버튼을 만드는데, event listener 까지 달고, 안에 내용까지 정해주었다
+      const container = React.createElement("div", null, [span, button]);
+      //  button 과 span을 동시에 div안에 넣고 브라우저에 렌더링 하려고 한다. [] 배열을 사용해서 세번째 인자로 넣는구나
+      ReactDOM.render(container, root);
       //  리액트 element를 가지고 Html로 만들어 배치한다는 뜻, 뒤에 인자에는 어디에 둘지가 들어간다.
     </script>
   </body>
 </html>
+
+<!-- 리액트 js 팀들은 알고 있는 것이다. 인터렉티브한 어플리케이션에서 하는 작업들 모두가 이벤트들을 감지하는 것이라는 것을 말이다. 그래서 이제 
+그냥 프로퍼티에 이벤트 리스너를 달수 있게 한것이다.
+
+-->
