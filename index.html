@@ -17,7 +17,7 @@
     <script type="text/babel">
       const App = () => {
         const [amount, setAmount] = React.useState();
-        const [flipped, setFlipped] = React.useState(false);
+        const [inverted, setInverted] = React.useState(false);
         // flip useState도 하나 더 만든다. 기본값은 false로 한다.
         const onChange = (event) => {
           setAmount(event.target.value);
@@ -27,9 +27,9 @@
           setAmount(0);
         };
         // reset 버튼을 누르면 초기화 할수 있도록 만들어준다.
-        const onFlip = () => {
+        const onInvert = () => {
           reset();
-          setFlipped((current) => !current);
+          setInverted((current) => !current);
         };
         // flip 버튼 눌렀을때, 최근값을 ! 연산자를 이용해 뒤집는다.
         // reset()을 한번 작동시켜 flip버튼 누르면 자동 초기화 되도록 만들어준다.
@@ -41,28 +41,30 @@
               {" "}
               <label htmlFor="minutes">Minutes</label>
               <input
-                value={flipped ? amount * 60 : amount}
+                value={inverted ? amount * 60 : amount}
                 id="minutes"
                 placeholder="Minutes"
                 type="number"
                 onChange={onChange}
-                disabled={flipped}
+                disabled={inverted}
               />
             </div>
             <div>
               {" "}
               <label htmlFor="hours">Hours</label>
               <input
-                value={flipped ? amount : (amount / 60).toFixed(2)}
+                value={inverted ? amount : (amount / 60).toFixed(2)}
                 id="hours"
                 placeholder="Hours"
                 type="number"
                 onChange={onChange}
-                disabled={!flipped}
+                disabled={!inverted}
               />
             </div>
             <button onClick={reset}>Reset</button>
-            <button onClick={onFlip}>Flip</button>
+            <button onClick={onInvert}>
+              {inverted ? "Turn back" : "Inverted"}
+            </button>
           </div>
         );
         // value에서 삼항 연산자 이용
