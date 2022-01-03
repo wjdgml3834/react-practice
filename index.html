@@ -16,16 +16,24 @@
     <!-- babel 사용. jsx문법을 브라우저에게 인식시키기 위해서 -->
     <script type="text/babel">
       const App = () => {
-        const [minutes, setMinutes] = React.useState();
-
+        const [amount, setAmount] = React.useState();
+        const [flipped, setFlipped] = React.useState(false);
+        // flip useState도 하나 더 만든다. 기본값은 false로 한다.
         const onChange = (event) => {
-          setMinutes(event.target.value);
+          setAmount(event.target.value);
         };
 
         const reset = () => {
-          setMinutes(0);
+          setAmount(0);
         };
         // reset 버튼을 누르면 초기화 할수 있도록 만들어준다.
+        const onFlip = () => {
+          reset();
+          setFlipped((current) => !current);
+        };
+        // flip 버튼 눌렀을때, 최근값을 ! 연산자를 이용해 뒤집는다.
+        // reset()을 한번 작동시켜 flip버튼 누르면 자동 초기화 되도록 만들어준다.
+
         return (
           <div>
             <h1>Super Converter</h1>
@@ -33,28 +41,32 @@
               {" "}
               <label htmlFor="minutes">Minutes</label>
               <input
-                value={minutes}
+                value={flipped ? amount * 60 : amount}
                 id="minutes"
                 placeholder="Minutes"
                 type="number"
                 onChange={onChange}
+                disabled={flipped}
               />
             </div>
             <div>
               {" "}
               <label htmlFor="hours">Hours</label>
               <input
-                value={(minutes / 60).toFixed(2)}
+                value={flipped ? amount : (amount / 60).toFixed(2)}
                 id="hours"
                 placeholder="Hours"
                 type="number"
-                disabled
+                onChange={onChange}
+                disabled={!flipped}
               />
             </div>
             <button onClick={reset}>Reset</button>
+            <button onClick={onFlip}>Flip</button>
           </div>
         );
-        // disabled는 입력창을 못치게 만든다.
+        // value에서 삼항 연산자 이용
+        // disabled는 disabled={true} 이런식으로도 조절 가능
       };
 
       const root = document.getElementById("root");
