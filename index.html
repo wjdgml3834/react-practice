@@ -18,16 +18,14 @@
       const root = document.getElementById("root");
 
       function App() {
-        const data = React.useState(0);
-        // let counter = 0 대신에 이거를 해줌. 초기값설정 가능
-        console.log(data);
-        // useState 콘솔 해보면, [undefined, ƒ] undefined 와 함수가 나온다.
-        // 여기서 undefined는 data이고, 이 함수는 data를 바꿀 때 사용하는 함수다.
-        // 한마디로 그전에 let counter=0 이랑 function countUp()함수를 동시에 가지고 있다고 보면된다.
+        const [counter, setCounter] = React.useState(0);
+        const onClick = () => {
+          setCounter(counter + 1);
+        };
         return (
           <div>
-            <h3>Total clicks: 0</h3>
-            <button>Click me</button>
+            <h3>Total clicks: {counter}</h3>
+            <button onClick={onClick}>Click me</button>
           </div>
         );
       }
