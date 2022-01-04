@@ -69,11 +69,26 @@
         // value에서 삼항 연산자 이용
         // disabled는 disabled={true} 이런식으로도 조절 가능
       };
+      const KmToMiles = () => {
+        return <h3>KM to Miles</h3>;
+      };
       const App = () => {
+        const [index, setIndex] = React.useState("0");
+        const onSelect = (event) => {
+          setIndex(event.target.value);
+        };
         return (
           <div>
             <h1>Super Converter</h1>
-            <MinutesToHours />
+            <select value={index} onChange={onSelect}>
+              <option value="0">단위를 선택하세요</option>
+              <option value="1">Minutes & Hours</option>
+              <option value="2">Km & Miles</option>
+            </select>
+            <hr />
+            {index === "0" ? "단위를 선택해주세요!" : null}
+            {index === "1" ? <MinutesToHours /> : null}
+            {index === "2" ? <KmToMiles /> : null}
           </div>
         );
       };
