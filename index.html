@@ -15,125 +15,35 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- babel 사용. jsx문법을 브라우저에게 인식시키기 위해서 -->
     <script type="text/babel">
-      const MinutesToHours = () => {
-        const [amount, setAmount] = React.useState();
-        const [inverted, setInverted] = React.useState(false);
-        // flip useState도 하나 더 만든다. 기본값은 false로 한다.
-        const onChange = (event) => {
-          setAmount(event.target.value);
-        };
-
-        const reset = () => {
-          setAmount(0);
-        };
-        // reset 버튼을 누르면 초기화 할수 있도록 만들어준다.
-        const onInvert = () => {
-          reset();
-          setInverted((current) => !current);
-        };
-        // flip 버튼 눌렀을때, 최근값을 ! 연산자를 이용해 뒤집는다.
-        // reset()을 한번 작동시켜 flip버튼 누르면 자동 초기화 되도록 만들어준다.
-
+      function Btn({ text, big }) {
         return (
-          <div>
-            <div>
-              {" "}
-              <label htmlFor="minutes">Minutes</label>
-              <input
-                value={inverted ? amount * 60 : amount}
-                id="minutes"
-                placeholder="Minutes"
-                type="number"
-                onChange={onChange}
-                disabled={inverted}
-              />
-            </div>
-            <div>
-              {" "}
-              <label htmlFor="hours">Hours</label>
-              <input
-                value={inverted ? amount : (amount / 60).toFixed(2)}
-                id="hours"
-                placeholder="Hours"
-                type="number"
-                onChange={onChange}
-                disabled={!inverted}
-              />
-            </div>
-            <button onClick={reset}>Reset</button>
-            <button onClick={onInvert}>
-              {inverted ? "Turn back" : "Inverted"}
-            </button>
-          </div>
+          <button
+            style={{
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px 20px",
+              border: 0,
+              borderRadius: 10,
+              fontSize: big ? 18 : 16,
+            }}
+          >
+            {text}
+          </button>
         );
-        // value에서 삼항 연산자 이용
-        // disabled는 disabled={true} 이런식으로도 조절 가능
-      };
-      const KmToMiles = () => {
-        const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false);
-        const onChange = () => {
-          setAmount(event.target.value);
-        };
-        const reset = () => {
-          setAmount("0");
-        };
-        const onInvert = () => {
-          reset();
-          setInverted((current) => !current);
-        };
-        return (
-          <div>
-            <div>
-              <label htmlFor="km">KM</label>
-              <input
-                id="km"
-                value={inverted ? amount * 1.609 : amount}
-                placeholder="KM"
-                type="number"
-                onChange={onChange}
-                disabled={inverted}
-              />
-            </div>
-            <div>
-              <label htmlFor="miles">Miles</label>
-              <input
-                id="miles"
-                value={inverted ? amount : (amount / 1.609).toFixed(5)}
-                placeholder="Miles"
-                type="number"
-                onChange={onChange}
-                disabled={!inverted}
-              />
-            </div>
-            <button onClick={reset}>Reset</button>
-            <button onClick={onInvert}>
-              {inverted ? "Turn back" : "Invert"}
-            </button>
-          </div>
-        );
-      };
+      }
+      // stlye 꾸며줄때는 객체로 표현하듯이 꾸며준다.
+      // 원래 props.text , props.big 인데 {}를 이용해 한 번 더 열어주면서 그냥 text, big이라고 쓴다.
       const App = () => {
-        const [index, setIndex] = React.useState("0");
-        const onSelect = (event) => {
-          setIndex(event.target.value);
-        };
         return (
           <div>
-            <h1>Super Converter</h1>
-            <select value={index} onChange={onSelect}>
-              <option value="0">단위를 선택하세요</option>
-              <option value="1">Minutes & Hours</option>
-              <option value="2">Km & Miles</option>
-            </select>
-            <hr />
-            {index === "0" ? "단위를 선택해주세요!" : null}
-            {index === "1" ? <MinutesToHours /> : null}
-            {index === "2" ? <KmToMiles /> : null}
+            <Btn text="Save Changes" big={true} />
+            <Btn text="Continue" big={false} />
           </div>
         );
       };
-
+      // 이렇게 props를 보내는건 함수 Btn({text: "Save Changes"}) 이런식으로 인자를 보내는거랑 같다.
+      // 어떤 prop이든 네가 btn 컴포넌트에 보내면, btn 함수의 첫번째 인자속으로 들어갈것이다.
+      // 리액트 Js는 자동으로 네가 이곳에 넣는 모든 property들을 모조리 오브젝트 안으로 넣을것이다 그리고 이것은 함수의 첫번째 매개변수로 전달된다.
       const root = document.getElementById("root");
       ReactDOM.render(<App />, root);
     </script>
