@@ -15,16 +15,16 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- babel 사용. jsx문법을 브라우저에게 인식시키기 위해서 -->
     <script type="text/babel">
-      function Btn({ text, big }) {
+      function Btn({ text, changeValue }) {
         return (
           <button
+            onClick={changeValue}
             style={{
               backgroundColor: "tomato",
               color: "white",
               padding: "10px 20px",
               border: 0,
               borderRadius: 10,
-              fontSize: big ? 18 : 16,
             }}
           >
             {text}
@@ -34,16 +34,19 @@
       // stlye 꾸며줄때는 객체로 표현하듯이 꾸며준다.
       // 원래 props.text , props.big 인데 {}를 이용해 한 번 더 열어주면서 그냥 text, big이라고 쓴다.
       const App = () => {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
         return (
           <div>
-            <Btn text="Save Changes" big={true} />
-            <Btn text="Continue" big={false} />
+            <Btn text={value} changeValue={changeValue} />
+            <Btn text="Continue" />
           </div>
         );
       };
-      // 이렇게 props를 보내는건 함수 Btn({text: "Save Changes"}) 이런식으로 인자를 보내는거랑 같다.
-      // 어떤 prop이든 네가 btn 컴포넌트에 보내면, btn 함수의 첫번째 인자속으로 들어갈것이다.
-      // 리액트 Js는 자동으로 네가 이곳에 넣는 모든 property들을 모조리 오브젝트 안으로 넣을것이다 그리고 이것은 함수의 첫번째 매개변수로 전달된다.
+      // 여기서 내가 지정한 컴포넌트에서 onClick은 실제 이벤트리스너가 아니라 단지 전달될 Props에 불과하다.
+      // 실제 html 엘리먼트안에 onClick을 달아야 이벤트리스너가 되는것이다.
+      // changeValue 와 같은 예시로 이렇게 함수를 전달 할 수도 있다.
+
       const root = document.getElementById("root");
       ReactDOM.render(<App />, root);
     </script>
